@@ -1,0 +1,56 @@
+.detalle__input input, textarea {
+    color: rgb(var(--v-theme-input_text));
+    font-weight: 0;
+    font-size: 12px;
+}
+
+.v-field .v-label {    
+    font-weight: bold;
+    color: rgb(var(--v-theme-input_label));
+}
+
+.input-field .v-field__input {
+    font-size: 12px !important;
+}
+
+.v-card-text {
+    padding: 0 1rem;
+}
+
+.title_section {
+    font-size: 14px;
+    font-weight: bold;
+    padding: 0 1rem;
+}
+
+.btn_header_left {
+    font-size: 12px;
+    color: rgb(var(--v-theme-btn_header_left))
+}
+
+.mensaje-adjutos .v-overlay__content{
+    background: rgb(255,0, 0, 0.7) !important;
+}
+
+.check-obj  {    
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    
+}
+.check-obj__label {
+    width: 300px;
+    font-weight: bold;
+    font-size: 0.8rem;
+    opacity: 0.6;
+    align-items: center;
+    color: rgb(var(--v-theme-input_label));
+}
+
+.check-obj .v-field__input{
+    padding-top: 0px;
+}
+
+.obs-color {
+    background-color: burlywood !important;
+}

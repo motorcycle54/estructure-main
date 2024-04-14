@@ -1,0 +1,21 @@
+<div class="container-body">
+    <div class="filtro" v-show="!mostrar_edit">
+        <filter-section @search="search">
+        </filter-section>
+    </div>
+    <div class="tabla">
+        <div class="wrapper" :class="{table_width_total: !mostrar_edit}">
+            <div class="lista">
+                <tableof-list v-if="listRecepcionPide.length > 0" :id_row="id_row" :data_set="listRecepcionPide"
+                    :column_set="column_set" @getIdRow="fillDetail" />
+            </div>
+        </div>
+    </div>
+    <div v-if="mostrar_edit" class="container-right">
+        <div class="wrapper">
+            <v-card style="height: 100%; overflow-y: scroll;">
+                <Edit v-if="cargarEdit" :data_set = "detalleRecepcionPide" @recepcionado="fillDetail"/>
+            </v-card>
+        </div>
+    </div>
+</div>

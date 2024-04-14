@@ -1,0 +1,1 @@
+export let BASE_URL="http://cea-desa-backend1.mpfn.gob.pe/ws_back2/mpvcentral";

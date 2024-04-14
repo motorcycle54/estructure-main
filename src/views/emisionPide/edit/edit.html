@@ -1,0 +1,124 @@
+<v-card>
+    <v-container>
+        <v-row dense>
+            <v-col cols="12">
+                <v-card color="header_edit" >
+                    <div class="d-flex flex-no-wrap justify-space-between">
+
+                        <div class="d-flex ">
+                            <v-card-title>
+                                <select-input type="btn" class="btn_header_left" variant="plain" :list_items="estados_set"
+                                    :object_item="{id:'idEstado', desc:'estado'}" :model="data_set.estado"
+                                    @obj="updateEstado($event)" />                        
+                                <v-btn variant="plain" class="btn_header_left" @click="openDocument()">
+                                    <v-icon :icon="'mdi-file-pdf'"></v-icon>
+                                    Ver Documento
+                                </v-btn>
+                            </v-card-title>
+                        </div>
+                        <div class="d-flex ">
+                            <v-card-actions>
+                                <v-btn class="ml-2" color="btn_header_right" icon="mdi-login-variant" variant="outlined"
+                                    @click="mostrar_edit = !mostrar_edit">
+                                </v-btn>             
+                            </v-card-actions>
+                        </div>
+                    </div>
+                </v-card>
+            </v-col>
+            <v-col cols="12" xs="12" sm="6" md="6">
+                <v-card color="remite_edit" style="margin-bottom: 10px;">
+                    <v-card-title class="title_section">
+                        REMITENTE
+                    </v-card-title>
+                    <v-divider style="margin-inline-start: 15px; margin-inline-end: 15px; padding-bottom: 3px;"></v-divider>
+                    <v-card-text>
+                        <v-text-field variant="plain" hide-details="auto" density="compact" :label="`${data_set.tipoDocumentoDestino == 'RUC' ? 'RUC' : 'DNI'}`"
+                            class="detalle__input" v-model="data_set.nuDocumentoDestino" readonly>
+                        </v-text-field>
+
+                        <v-text-field variant="plain" hide-details="auto" density="compact" label="Dependencia"
+                            class="detalle__input" v-model="data_set.deDependenciaEmisor" readonly>
+                        </v-text-field>
+
+                        <v-text-field variant="plain" hide-details="auto" density="compact" label="Nombre Emisor"
+                            class="detalle__input" v-model="data_set.deNombreEmisor" readonly>
+                        </v-text-field>
+
+                    </v-card-text>
+                </v-card>
+                <v-card color="datdoc_edit" :class="{ 'obs-color' : (data_set.inObservado && data_set.inObservado != 0)}">
+                    <v-card-title class="title_section">
+                        Datos del Documento
+                    </v-card-title>
+                    <v-card-text>
+                        <v-text-field variant="plain" hide-details="auto" density="compact" label="Tipo"
+                            class="detalle__input" v-model="data_set.idTipoDocumentoAdm" readonly>
+                        </v-text-field>
+
+                        <v-text-field variant="plain" hide-details="auto" density="compact" label="Número"
+                            class="detalle__input" v-model="data_set.nuDocumentoAdm" readonly>
+                        </v-text-field>
+
+                        <v-text-field variant="plain" hide-details="auto" density="compact" label="Fecha de Envío"
+                            class="detalle__input" v-model="data_set.feEnvio" readonly>
+                        </v-text-field>
+
+                        <v-text-field variant="plain" hide-details="auto" density="compact" label="Fecha de Registro"
+                            class="detalle__input" v-model="data_set.feRegistro" readonly>
+                        </v-text-field>
+
+                        <v-textarea variant="plain" rows="2" hide-details="auto" density="compact" label="Asunto"
+                            class="detalle__input" v-model="data_set.asunto" readonly>
+                        </v-textarea>
+
+                        <v-textarea variant="plain" rows="2" hide-details="auto" density="compact" label="Observaciones"
+                            class="detalle__input" v-model="data_set.observacion">
+                        </v-textarea>
+                    </v-card-text>
+                </v-card>
+            </v-col>
+            <v-col cols="12" xs="12" sm="6" md="6">
+                <v-card color="expedi_edit" style="margin-bottom: 10px;">
+                    <v-card-title class="title_section">
+                        Expediente
+                    </v-card-title>
+                    <v-card-text>
+                        <v-text-field variant="plain" hide-details="auto" density="compact" label="Proceso"
+                            class="detalle__input" v-model="data_set.rucEntidadRemite" readonly>
+                        </v-text-field>
+
+                        <v-text-field variant="plain" hide-details="auto" density="compact" label="Tarea"
+                            class="detalle__input" v-model="data_set.rucEntidadRemite" readonly>
+                        </v-text-field>
+
+                        <v-text-field variant="plain" hide-details="auto" density="compact" label="Acción"
+                            class="detalle__input" v-model="data_set.rucEntidadRemite" readonly>
+                        </v-text-field>
+
+                        <v-text-field variant="plain" hide-details="auto" density="compact" label="Tarea Siguiente"
+                            class="detalle__input" v-model="data_set.rucEntidadRemite" readonly>
+                        </v-text-field>
+
+                        <v-text-field variant="plain" hide-details="auto" density="compact" label="Fecha"
+                            class="detalle__input" v-model="data_set.rucEntidadRemite" readonly>
+                        </v-text-field>
+                    </v-card-text>
+                </v-card>
+                <attached-section :neverShow="data_set.idEstado == 'R'" :files_set="files_attached_set" :object_file="{att1:'noArchivo', att2:'deArchivo'}"
+                    accepted=".pdf" :title="'Adjuntos'" @files="agregarAdjuntos" @updateList="updateAdjunto"
+                    @openAttach="openFileAdjunto">
+
+                    <a id="link" target="_blank"> link de descarga 
+                        <v-tooltip class="mensaje-adjutos" v-if="data_set.nuAnexos != files_attached_set.length"
+                        color = "red"
+                        activator="parent"
+                        anchor="bottom"
+                        :model-value="true"
+                    >Debe descargar y adjuntar solo ({{data_set.nuAnexos}}) archivos requeridos </v-tooltip>
+                    </a>  
+                </attached-section>
+            </v-col>
+        </v-row>
+    </v-container>
+</v-card>

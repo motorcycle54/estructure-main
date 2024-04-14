@@ -1,0 +1,14 @@
+<v-menu v-model="showMenu">
+  <template v-slot:activator="{ props }">
+    <v-text-field :class="class" density="compact" variant="plain" color="success" hide-details="auto" v-model="model"
+      v-bind="props" @keyup.enter="filterList(model)"
+      append-inner-icon="mdi-magnify" @click:append-inner="filterList(model)" 
+      clearable  required>
+    </v-text-field>    
+  </template>
+  <v-list>
+    <v-list-item v-for="(item, index) in listFiltered" :key="index" :value="index" @click="selected(item)">
+      <v-list-item-title>{{ item[object_item.desc] }}</v-list-item-title>
+    </v-list-item>
+  </v-list>
+</v-menu>

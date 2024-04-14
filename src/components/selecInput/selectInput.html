@@ -1,0 +1,20 @@
+<v-menu v-model="showMenu">
+    <template v-slot:activator="{ props }">
+        <v-text-field v-if="type != 'btn'" :class="class" density="compact" :variant="variant" hide-details="auto" readonly :label="label"
+            v-model="model" @click="showMenu = !showMenu" @click:append-inner="showMenu = !showMenu" v-bind="props"
+            :append-inner-icon=" showMenu ? 'mdi-menu-up' : 'mdi-menu-down'">
+        </v-text-field>
+        <v-btn v-if="type == 'btn'" :class="class" density="compact" :variant="variant"
+            @click="showMenu = !showMenu" v-bind="props"
+            :append-inner-icon=" showMenu ? 'mdi-menu-up' : 'mdi-menu-down'">
+            <v-icon :icon="'mdi-flag'"></v-icon>
+            {{model}}
+        </v-btn>
+    </template>
+    <v-list style="background-color: aliceblue;">
+        <v-list-item v-for="(item, index) in list_items" :key="index" :value="index" @click="selected(item)">
+            <v-list-item-title :class="class">{{ item[object_item.desc] }}
+            </v-list-item-title>
+        </v-list-item>
+    </v-list>
+</v-menu>

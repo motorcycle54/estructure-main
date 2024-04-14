@@ -1,0 +1,117 @@
+<v-card color="attach_edit" style="padding-bottom: 10px;">
+    <v-card-title class="title_section d-flex flex-no-wrap justify-space-between">
+        <span class="d-flex rows">
+            <p>{{title}} ({{ files_set.length |0}})</p>
+            <v-btn v-if="show && !neverShow" size="x-small" variant="outlined" icon color="attach_edit__add" @click="dialog = true">
+                <v-icon >
+                    mdi-paperclip
+                </v-icon>
+            </v-btn>
+        </span>
+        <slot></slot>
+        <v-btn size="x-small" variant="outlined" color="attach_edit__expansion" :icon="show ? 'mdi-chevron-up' : 'mdi-chevron-down'" @click="show = !show"></v-btn>
+    </v-card-title>
+    <v-expand-transition >
+        <v-card-text v-show="show" style="min-height: 30px;">
+            <v-list two-line style="max-height: 240px; min-height: 20px;" color="attach_edit__body">
+                <v-list-item v-for="file in files_set" :key="file[object_file.att1]" :title="file[object_file.att1]" :subtitle="file[object_file.att2]">
+                    <template v-slot:append>
+                        <v-list-item-avatar style="min-width: 96px;" right>
+                            <tr>
+                                <td>
+                                    <v-btn variant="text" color="#FFFFFF" icon="mdi-file-pdf" @click="openFile(file)"></v-btn>
+                                </td>
+                                <td>
+                                    <dialog-confirmation @confirmar="deleteFile(file)" message="Seguro que desea eliminar adjunto">
+                                        <template v-slot:btnDialog>
+                                            <v-btn  v-if="!neverShow"  variant="text" color="error" icon="mdi-delete" ></v-btn>
+                                        </template>
+                                    </dialog-confirmation> 
+                                </td>
+                            </tr>
+                        </v-list-item-avatar>
+                    </template>
+                </v-list-item>
+            </v-list>
+        </v-card-text>
+    </v-expand-transition>
+</v-card>
+<v-dialog persistent v-model="dialog">
+    <v-card>
+        <v-card-title class="dialog-title justify-space-between">
+            Administracion de {{title}}
+            <v-btn icon="mdi-close-thick" variant="outlined" @click="cerrarDialog()">
+                close
+            </v-btn>
+        </v-card-title>
+        <v-card-text style="max-height: 400px;">
+            <v-row>
+                <v-col cols="5" class="d-flex align-center justify-space-between">
+                    <p class="upload-file">AGREGAR ARCHIVOS</p>
+                    <input type="file" id="fileUpload" v-if="true" @change="loadedFile($event)" name="fileUpload"
+                        multiple="multiple" hidden />
+                    <v-btn variant="outlined" size="x-small" icon color="secondary" @click="chooseFiles()">
+                        <v-icon>mdi-cloud-upload</v-icon>
+                    </v-btn>
+                </v-col>
+            </v-row>
+            <v-container style="height: 100%; overflow-y: scroll;">   
+                <v-row>
+                    <v-col class="text-left" cols="10" md="5">
+                        <th> Nombre </th>
+                    </v-col>
+                    <v-col class="text-left" cols="10" md="5">
+                        <th> Descripción </th> 
+                    </v-col>
+                    <v-col cols="2" md="2">
+                        
+                    </v-col>
+                </v-row>            
+                <v-row v-for="file in files_set">
+                    <v-col cols="10" md="5">
+                        <v-text-field density="compact" variant="underlined" color="success" hide-details="auto"
+                            v-model="file[object_file.att1]" readonly required>
+                        </v-text-field>
+                    </v-col>
+                    <v-col cols="10" md="5">
+                        <v-text-field density="compact" variant="underlined" color="success" hide-details="auto"
+                            v-model="file[object_file.att2]" v-alphabetic-only required>
+                        </v-text-field>
+                    </v-col>
+                    <v-col cols="2" md="2">
+                        <v-btn variant="outlined" size="x-small" icon color="error" @click="openFile(file)">
+                            <v-icon>mdi-file-pdf</v-icon>
+                        </v-btn>
+                    </v-col>
+                </v-row>
+                
+                <v-row v-for="file in filesTemp">
+                    <v-col cols="10" md="5">
+                        <v-text-field density="compact" variant="underlined" color="success" hide-details="auto"
+                            v-model="file[object_file.att1]" readonly required>
+                        </v-text-field>
+                    </v-col>
+                    <v-col cols="10" md="5">
+                        <v-text-field density="compact" variant="underlined" color="success" hide-details="auto"
+                            v-model="file[object_file.att2]" required>
+                        </v-text-field>
+                    </v-col>
+                    <v-col cols="2" md="2">
+                        <v-btn variant="outlined" size="x-small" icon color="error" @click="openFile(file)">
+                            <v-icon>mdi-file-pdf</v-icon>
+                        </v-btn>
+                    </v-col>
+                </v-row>
+            </v-container>
+        </v-card-text>
+        <v-card-actions class="d-flex justify-end">
+            <v-btn color="green darken-1" variant="text" @click="sendFormData()">
+                Guardar
+            </v-btn>
+            <v-btn color="red darken-1" variant="text" @click="cerrarDialog()">
+                Cancelar
+            </v-btn>
+
+        </v-card-actions>
+    </v-card>
+</v-dialog>

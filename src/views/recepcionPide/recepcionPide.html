@@ -1,0 +1,26 @@
+<div class="container-body">
+    <div class="filtro" v-show="!mostrarEdit">
+        <filter-section @search="search">
+        </filter-section>
+    </div>
+    <div class="tabla">
+        <div class="wrapper" :class="{table_width_total: !mostrarEdit}">
+            <div class="lista">
+                <tableof-list v-if="listRecepcionPide.length > 0" border="true" :id_row="id_row" :data_set="listRecepcionPide"
+                    :column_set="column_set" @getIdRow="fillDetail" />
+            </div>
+        </div>
+    </div>
+    <div v-if="mostrarEdit" class="container-right">
+        <div class="wrapper">
+            <v-card style="height: 100%; overflow-y: scroll;">
+                <Edit v-if="cargarEdit" :data_set = "detalleRecepcionPide" @recepcionado="fillDetail"/>
+                <v-row>
+                    <v-col>
+                        <Destinatarios v-if="cargarDestinos" :idRecepcion = "detalleRecepcionPide.idRecepcion" :listDestination = "listDestination" :estadoRecepcion="detalleRecepcionPide.idEstado"/>
+                    </v-col>
+                </v-row>
+            </v-card>
+        </div>
+    </div>
+</div>

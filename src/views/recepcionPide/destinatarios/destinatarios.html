@@ -1,0 +1,71 @@
+<AddDestinations v-if="estadoRecepcion != 'R' " :listDestination="list_destination" @saveList="updateRecepcionDestino">
+    <template v-slot:btnName> Agregar Destinatario </template>
+    <template v-slot:contenido>
+        <v-table fixed-header style="padding-bottom: 30px;">
+            <thead>
+
+                
+                <tr>
+                    <v-btn v-if="!flagSede" class="btn-show-sede" variant="plain" color="green" @click="flagSede = true">
+                        <v-icon :icon="'mdi-chevron-double-right'"></v-icon>
+                        Ver Sede
+                    </v-btn>
+                    <v-btn v-if="flagSede" class="btn-show-sede" variant="plain" color="red" @click="flagSede = false">
+                        <v-icon :icon="'mdi-chevron-double-left'"></v-icon>
+                        Ocultar Sede
+                    </v-btn>
+                    <th v-if="flagSede" >
+                        Sede
+                    </th>
+                    <th >
+                        Dependencia
+                    </th>
+                    <th >
+                        Responsable
+                    </th>
+                    <th >
+                        Prioridad
+                    </th>
+                    <th >
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr v-for="(destino, index) in list_destination">
+                    <td class="btn-show-sede"></td>
+                    <td v-if="flagSede">
+                        <AutoComplete class="detalle__input" :list_items="list_locales"
+                            :object_item="{code: 'coLocDes', desc:'deLocal'}" :value="destino.coLocDes"
+                            :model="destino.deLocDes" @id="destino.coLocDes = $event"
+                            @desc="destino.deLocDes = $event" />
+                    </td>
+                    <td>
+                        <dependenceSearch class="detalle__input" :coLocal = "destino.coLocal"
+                        :object_item="{code: 'coDependencia', desc:'deDependencia'}"
+                        :model="destino.deDepDes" @itemSelected="fillDestino($event, destino)"/> 
+                    </td>
+                    <td>
+                        <v-text-field class="detalle__input" density="compact" variant="plain" color="success"
+                            hide-details="auto" v-model="destino.deEmpDes" readonly required>
+                        </v-text-field>
+                    </td>
+                    <td>                        
+                        <select-input class="detalle__input" variant="plain" :list_items="list_priority"
+                            :object_item="{id:'coPri', desc:'dePri'}" :model="destino.dePri"
+                            @id="destino.coPri = $event" @desc="destino.dePri = $event" />
+                    </td>
+                    <td>
+                        <dialog-confirmation @confirmar="deleteDestination(destino)" message="Seguro que desea eliminar destinatario">
+                            <template v-slot:btnDialog>
+                                <v-btn color="error" icon="mdi-trash-can-outline" size="small"
+                                ></v-btn>
+                            </template>
+                        </dialog-confirmation>    
+                    </td>
+                </tr>    
+            </tbody>
+        </v-table>
+    </template>
+</AddDestinations>
+<tableof-list :data_set="list_destination" :header_set="header_set"
+    :column_set="column_set" />

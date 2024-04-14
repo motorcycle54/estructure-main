@@ -1,0 +1,70 @@
+<v-card class="mx-auto">
+    <v-expand-transition>
+        <div>
+            <v-card-text style="padding: 0px;">
+                <v-form ref="form">
+                    <div style="padding: 20px;">
+                        <v-row>
+                            <v-col cols="12" sm="12" md="6">
+                                <inpuDate />
+                            </v-col>
+                            <v-col cols="12" sm="12" md="6">
+                                <select-input variant="underlined"
+                                label="Estados" 
+                                :list_items="estados" 
+                                :object_item="{id:'idEstado', desc:'deEstado'}" 
+                                :model="estado.deEstado" 
+                                @id="estado.idEstado = $event" @desc="estado.deEstado = $event"/>                               
+                            </v-col>
+                            <v-col cols="12" >
+                                <v-text-field density="compact" variant="underlined" color="success" hide-details="auto"
+                                    v-model="asunto" label="Asunto" v-uppercase-only v-max-length="30" required >
+                                </v-text-field>
+                            </v-col>
+                            
+                            <!-- <v-col cols="12" sm="12" md="6">
+                                <v-text-field density="compact" variant="underlined" color="success" hide-details="auto"
+                                    v-model="documento" label="Documento" required>
+                                </v-text-field>
+
+                            </v-col> -->
+                            <!-- <v-col cols="12" sm="12" md="6">
+                                <v-text-field density="compact" variant="underlined" color="success" hide-details="auto"
+                                    v-model="estado" label="Nro Seguimiento" required>
+                                </v-text-field>
+
+                            </v-col>
+                            <v-col cols="12" sm="12" md="6">
+                                <v-text-field density="compact" variant="underlined" color="success" hide-details="auto"
+                                    v-model="estado" label="Nro Expediente" required>
+                                </v-text-field>
+                            </v-col> -->
+                            <!-- <v-col cols="12" sm="12" md="6">
+                                <v-text-field density="compact" variant="underlined" color="success" hide-details="auto"
+                                    v-model="dniEmisor" label="DNI Emisor" required>
+                                </v-text-field>
+                            </v-col> -->
+                        </v-row>
+                    </div>
+                </v-form>
+
+            </v-card-text>
+
+            <v-card-actions>
+                <add-filters>
+                    <template v-slot:initialFilters> 
+                        <v-col cols="12">
+                            <v-text-field density="compact" variant="underlined" color="success" hide-details="auto"
+                            v-model="ruc" label="RUC" v-digits-only v-max-length="15"  required>
+                            </v-text-field>
+                        </v-col>
+                    </template>
+                </add-filters>
+                <v-spacer></v-spacer>
+                <v-btn color="orange-lighten-2" variant="text" @click="search()">
+                    Buscar
+                </v-btn>
+            </v-card-actions>
+        </div>
+    </v-expand-transition>
+</v-card>

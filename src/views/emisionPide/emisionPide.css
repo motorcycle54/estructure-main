@@ -1,0 +1,67 @@
+.container-body {
+    display: grid;
+    grid-template-areas: "filtro filtro"
+                         "tabla detalle";
+    grid-template-columns: auto 1fr;
+    grid-template-rows: auto 1fr;
+    height: 100vh;                    
+    
+}
+
+.filtro{   
+    grid-area: filtro;
+    max-width: 100%; 
+    padding-bottom: 5px;
+}
+.tabla{    
+    grid-area: tabla;
+    overflow: hidden;
+    position: relative;
+}
+
+.container-right {
+    grid-area: detalle;
+    overflow: hidden;
+    background-color: aquamarine;
+}
+.wrapper{
+    position: static;
+    height: 100%;
+    width: 100%;
+
+}
+
+.lista{
+    height: 100%;
+    outline: none;
+    overflow-y: scroll;
+    position: relative;
+}
+
+
+.detalle {  
+    height: 100%;
+    outline: none;    
+    overflow-y: scroll;
+    position: relative;
+}
+ 
+
+.v-dialog .v-overlay__content {
+    width: 500px;
+    max-width: 100%;
+}
+ 
+.table_width_total {
+    width: 100vw;
+}
+
+@media screen and (max-width: 1025px) {
+    .container-body {
+        grid-template-columns: 1fr auto;
+    }
+}
+
+ 
+
+ 

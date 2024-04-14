@@ -1,0 +1,46 @@
+<v-btn color="btn_open_destinos" @click="openEditDestination()">
+    <slot name="btnName"> Abre Modal </slot>
+</v-btn>
+<v-dialog class="dialog_destination" v-model="openDialog" :scrim="false" transition="dialog-bottom-transition">
+    <v-card color="btn_open_destinos">
+        <v-card-title class="dialog-title justify-space-between">
+            Administracion de Destinatarios
+            <dialog-confirmation @confirmar="closeWithoutSave"
+                message="Se realizó cambios en destintarios y estos no seran guardados, ¿esta seguro de cancelar?">
+                <template v-slot:btnDialog>
+                    <v-btn icon="mdi-close-thick" variant="outlined" @click="valida()">
+                        close
+                    </v-btn>
+                </template>
+            </dialog-confirmation>
+        </v-card-title>
+        <v-list lines="two" subheader>
+            <v-list-item>
+                <v-list-item-header>
+                    <v-btn variant="outlined" color="secondary" @click="addDestinatarios()">
+                        Agregar
+                    </v-btn>
+                </v-list-item-header>
+                <template v-slot:append>
+                    <v-list-item-avatar end>
+                        <v-btn variant="outlined" color="primary" @click="saveListDestination()">
+                            Guardar
+                        </v-btn>
+
+                        <dialog-confirmation @confirmar="closeWithoutSave"
+                            style="display: inline-flex; vertical-align: middle;"
+                            message="Se realizó cambios en destintarios y estos no seran guardados, ¿esta seguro de cancelar?">
+                            <template v-slot:btnDialog>
+                                <v-btn variant="outlined" color="warning">
+                                    Cancelar
+                                </v-btn>
+                            </template>
+                        </dialog-confirmation>
+                    </v-list-item-avatar>
+                </template>
+            </v-list-item>
+        </v-list>
+        <v-divider></v-divider>
+        <slot name="contenido"></slot>
+    </v-card>
+</v-dialog>

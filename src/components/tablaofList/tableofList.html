@@ -1,0 +1,28 @@
+<div class="container">
+  <v-table :class="{table: border}"
+    fixed-header>
+    <thead>
+      <tr >
+        <th v-for="head in header_set" style="padding: 16px 32px;">
+          {{head}}
+        </th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr v-for="item in data_set"  @click="sendRowEvent(item[id_row])">
+        <td v-for="column in column_set" class="column">
+          <v-list-item three-line v-if="!any_selected || column.show_always">
+            <v-list-item-avatar v-if="column.icono" left>
+              <v-icon :icon="estdaoIcono[item[column.icono]] ? estdaoIcono[item[column.icono]] : estdaoIcono[0]"></v-icon>
+            </v-list-item-avatar>
+            <v-list-item-header>
+              <v-list-item-title v-if="column.linea1"> <span v-for="attr in column.linea1"> {{`${item[attr]} `}} </span> </v-list-item-title>
+              <v-list-item-subtitle v-if="column.linea2"> <span v-for="attr in column.linea2"> {{`${item[attr]} `}} </span> </v-list-item-subtitle>
+              <v-list-item-subtitle v-if="column.linea3"> <span v-for="attr in column.linea3"> {{`${item[attr]} `}} </span> </v-list-item-subtitle>
+            </v-list-item-header>
+          </v-list-item>
+        </td>        
+      </tr>
+    </tbody>
+  </v-table>
+</div>

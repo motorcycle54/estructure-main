@@ -1,0 +1,14 @@
+.detalle__input input {
+    color: white !important;
+    font-weight: 500;
+}
+
+.detalle__input .v-field__input{
+    color: white !important;
+    font-weight: 500;
+}
+
+.dialog-bottom-transition-enter-active,
+.dialog-bottom-transition-leave-active {
+  transition: transform .60s ease-in-out;
+}

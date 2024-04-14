@@ -1,0 +1,64 @@
+<v-btn @click="dialog = true">Filtros</v-btn>
+<v-dialog
+v-model="dialog"
+:retain-focus="false"
+persistent
+>   
+    <v-card max-width="500" min-width="500">
+        <v-card-title class="text-h5 red lighten-3">
+            Filtros
+        </v-card-title>
+        <v-container>
+            <v-form ref="form">
+                <v-container class="input-field">
+                    <v-row>
+                        <slot name="initialFilters"></slot> 
+                    </v-row>
+                </v-container>
+            </v-form>  
+        </v-container>
+        <v-card-actions class="justify-end">
+            <v-btn @click="addFilters" color="teal-accent-4"> Agregar</v-btn>
+            <v-btn @click="closeDialog">Cerrar</v-btn>
+        </v-card-actions>
+    </v-card>
+</v-dialog>
+<br>
+<div align="left" v-show="showFilters">
+    <v-chip
+        v-if="chip1"
+            :value="valor1 = 1"
+            class="ma-2"
+            color="rgb(var(--v-theme-header))"
+            closable
+            close-icon="mdi-close-outline"
+            @click:close="remove(valor1)"   
+            draggable
+    >
+        Ruc: {{ ruc_ }}                           
+    </v-chip>
+    <v-chip
+        v-if="chip2"
+            :value="valor2 = 2"
+            class="ma-2"
+            color="rgb(var(--v-theme-header))"
+            closable
+            close-icon="mdi-close-outline"
+            @click:close="remove(valor2)"
+            draggable
+    >
+        Estado: {{ estado_ }}                           
+    </v-chip>
+    <v-chip
+        v-if="chip3"
+            :value="valor3 = 3"
+            class="ma-2"
+            color="rgb(var(--v-theme-header))"
+            closable
+            close-icon="mdi-close-outline"
+            @click:close="remove(valor3)"
+            draggable
+    >
+        Asunto: {{ asunto_ }}                           
+    </v-chip>
+</div>
